@@ -8,14 +8,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fa6tech7378back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
 </head>
-<body class="bg-background min-h-screen">
+<body class="min-h-screen bg-background">
     <!-- Header -->
-    <header class="bg-surface border-b border-border">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+    <header class="border-b bg-surface border-border">
+        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <svg class="w-8 h-8 text-primary mr-3" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-8 h-8 mr-3 text-primary" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="32" height="32" rx="8" fill="currentColor"/>
                         <path d="M8 12L16 8L24 12V20L16 24L8 20V12Z" fill="white"/>
                         <circle cx="16" cy="16" r="3" fill="currentColor"/>
@@ -25,7 +25,7 @@
                 
                 <!-- Navigation -->
                 <nav class="flex items-center space-x-4">
-                    <a href="user_registration.html" class="text-text-secondary hover:text-primary transition-colors duration-200 font-medium">
+                    <a href="user_registration.html" class="font-medium transition-colors duration-200 text-text-secondary hover:text-primary">
                         Register
                     </a>
                 </nav>
@@ -34,25 +34,25 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-1 py-8 px-4 sm:px-6 lg:px-8">
+    <main class="flex-1 px-4 py-8 sm:px-6 lg:px-8">
         <div class="max-w-md mx-auto">
             <!-- Login Card -->
-            <div class="bg-surface rounded-2xl shadow-lg border border-border p-6 sm:p-8">
+            <div class="p-6 border shadow-lg bg-surface rounded-2xl border-border sm:p-8">
                 <!-- Header -->
-                <div class="text-center mb-8">
-                    <h1 class="text-2xl font-semibold text-text-primary mb-2">Welcome Back</h1>
+                <div class="mb-8 text-center">
+                    <h1 class="mb-2 text-2xl font-semibold text-text-primary">Welcome Back</h1>
                     <p class="text-text-secondary">Sign in to your A6 TECH account to track your work time</p>
                 </div>
 
                 <!-- Error Message (Hidden by default) -->
-                <div id="errorMessage" class="hidden mb-6 p-4 bg-error-50 border border-error-100 rounded-xl">
+                <div id="errorMessage" class="hidden p-4 mb-6 border bg-error-50 border-error-100 rounded-xl">
                     <div class="flex items-center">
-                        <svg class="w-5 h-5 text-error mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-5 h-5 mr-3 text-error" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
                         </svg>
                         <div>
-                            <p class="text-error font-medium">Login Failed</p>
-                            <p class="text-error text-sm" id="errorText">Invalid A6ID. Please check your credentials and try again.</p>
+                            <p class="font-medium text-error">Login Failed</p>
+                            <p class="text-sm text-error" id="errorText">Invalid A6ID. Please check your credentials and try again.</p>
                         </div>
                     </div>
                 </div>
@@ -61,25 +61,25 @@
                 <form id="loginForm" class="space-y-6">
                     <!-- A6ID Input -->
                     <div>
-                        <label for="a6id" class="block text-sm font-medium text-text-primary mb-2">
+                        <label for="a6id" class="block mb-2 text-sm font-medium text-text-primary">
                             A6ID *
                         </label>
                         <div class="relative">
-                            <input type="text" id="a6id" name="a6id" placeholder="A6ID0001" required maxlength="8" class="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 font-data text-lg tracking-wider" oninput="formatA6ID(this)" />
+                            <input type="text" id="a6id" name="a6id" placeholder="A6ID0001" required maxlength="8" class="w-full px-4 py-3 text-lg tracking-wider transition-all duration-200 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent font-data" oninput="formatA6ID(this)" />
                             <div class="absolute inset-y-0 right-0 flex items-center pr-3">
                                 <svg class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m0 0a2 2 0 012 2m-2-2a2 2 0 00-2 2m2-2a2 2 0 002 2M9 7a2 2 0 00-2 2v6a2 2 0 002 2h6a2 2 0 002-2V9a2 2 0 00-2-2H9z"/>
                                 </svg>
                             </div>
                         </div>
-                        <p class="text-xs text-text-secondary mt-1">Enter your unique A6ID (e.g., A6ID0001)</p>
-                        <div id="a6idError" class="hidden text-error text-sm mt-1"></div>
+                        <p class="mt-1 text-xs text-text-secondary">Enter your unique A6ID (e.g., A6ID0001)</p>
+                        <div id="a6idError" class="hidden mt-1 text-sm text-error"></div>
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" id="submitButton" class="w-full bg-primary text-white py-3 px-6 rounded-xl font-medium hover:bg-primary-700 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button type="submit" id="submitButton" class="w-full px-6 py-3 font-medium text-white transition-all duration-200 bg-primary rounded-xl hover:bg-primary-700 focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                         <span id="submitText">Login</span>
-                        <svg id="loadingSpinner" class="hidden animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg id="loadingSpinner" class="hidden w-5 h-5 mr-3 -ml-1 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                         </svg>
@@ -88,16 +88,16 @@
 
                 <!-- Registration Link -->
                 <div class="mt-6 text-center">
-                    <p class="text-text-secondary text-sm">
+                    <p class="text-sm text-text-secondary">
                         New user? 
-                        <a href="user_registration.html" class="text-primary hover:text-primary-700 font-medium transition-colors duration-200">
+                        <a href="user_registration.html" class="font-medium transition-colors duration-200 text-primary hover:text-primary-700">
                             Create Account
                         </a>
                     </p>
                 </div>
 
                 <!-- Security Badge -->
-                <div class="mt-6 flex items-center justify-center space-x-2 text-xs text-text-secondary">
+                <div class="flex items-center justify-center mt-6 space-x-2 text-xs text-text-secondary">
                     <svg class="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                     </svg>
@@ -106,13 +106,13 @@
             </div>
 
             <!-- Demo Credentials -->
-            <div class="mt-6 bg-accent-50 border border-accent-100 rounded-xl p-4">
+            <div class="p-4 mt-6 border bg-accent-50 border-accent-100 rounded-xl">
                 <div class="flex items-start">
                     <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                     </svg>
                     <div>
-                        <h3 class="text-sm font-medium text-accent mb-1">Demo Access</h3>
+                        <h3 class="mb-1 text-sm font-medium text-accent">Demo Access</h3>
                         <p class="text-xs text-accent">Try logging in with any registered A6ID from the system</p>
                         <div class="mt-2 space-y-1">
                             <p class="text-xs font-data text-accent">Example: A6ID0001</p>
@@ -123,34 +123,34 @@
             </div>
 
             <!-- Features Section -->
-            <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="text-center p-4">
-                    <div class="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-3">
+                <div class="p-4 text-center">
+                    <div class="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-primary-50 rounded-xl">
                         <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-sm font-medium text-text-primary mb-1">Time Tracking</h3>
+                    <h3 class="mb-1 text-sm font-medium text-text-primary">Time Tracking</h3>
                     <p class="text-xs text-text-secondary">Automatic login/logout timestamp recording</p>
                 </div>
                 
-                <div class="text-center p-4">
-                    <div class="w-12 h-12 bg-accent-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <div class="p-4 text-center">
+                    <div class="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-accent-50 rounded-xl">
                         <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 00-2-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-sm font-medium text-text-primary mb-1">Analytics</h3>
+                    <h3 class="mb-1 text-sm font-medium text-text-primary">Analytics</h3>
                     <p class="text-xs text-text-secondary">Comprehensive work time insights and reports</p>
                 </div>
                 
-                <div class="text-center p-4">
-                    <div class="w-12 h-12 bg-warning-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <div class="p-4 text-center">
+                    <div class="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-warning-50 rounded-xl">
                         <svg class="w-6 h-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-sm font-medium text-text-primary mb-1">Team Management</h3>
+                    <h3 class="mb-1 text-sm font-medium text-text-primary">Team Management</h3>
                     <p class="text-xs text-text-secondary">View all team members and their activity</p>
                 </div>
             </div>
@@ -158,9 +158,9 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-surface border-t border-border mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div class="text-center text-text-secondary text-sm">
+    <footer class="mt-12 border-t bg-surface border-border">
+        <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="text-sm text-center text-text-secondary">
                 © 2025 A6 TECH. All Rights Reserved.
             </div>
         </div>
