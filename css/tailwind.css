@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary: #2563EB; /* blue-600 - Trust-building blue */
+  --color-primary-50: #EFF6FF; /* blue-50 */
+  --color-primary-100: #DBEAFE; /* blue-100 */
+  --color-primary-500: #3B82F6; /* blue-500 */
+  --color-primary-600: #2563EB; /* blue-600 */
+  --color-primary-700: #1D4ED8; /* blue-700 */
+  
+  /* Secondary Colors */
+  --color-secondary: #64748B; /* slate-500 - Sophisticated slate */
+  --color-secondary-100: #F1F5F9; /* slate-100 */
+  --color-secondary-200: #E2E8F0; /* slate-200 */
+  --color-secondary-400: #94A3B8; /* slate-400 */
+  --color-secondary-500: #64748B; /* slate-500 */
+  --color-secondary-600: #475569; /* slate-600 */
+  
+  /* Accent Colors */
+  --color-accent: #10B981; /* emerald-500 - Success-oriented emerald */
+  --color-accent-50: #ECFDF5; /* emerald-50 */
+  --color-accent-100: #D1FAE5; /* emerald-100 */
+  --color-accent-500: #10B981; /* emerald-500 */
+  --color-accent-600: #059669; /* emerald-600 */
+  
+  /* Background Colors */
+  --color-background: #F8FAFC; /* slate-50 - Ultra-light blue-gray */
+  --color-surface: #FFFFFF; /* white - Pure white for cards */
+  
+  /* Text Colors */
+  --color-text-primary: #1E293B; /* slate-800 - Deep slate */
+  --color-text-secondary: #64748B; /* slate-500 - Medium slate */
+  
+  /* Status Colors */
+  --color-success: #059669; /* emerald-600 - Deeper emerald */
+  --color-success-50: #ECFDF5; /* emerald-50 */
+  --color-success-100: #D1FAE5; /* emerald-100 */
+  
+  --color-warning: #D97706; /* amber-600 - Warm amber */
+  --color-warning-50: #FFFBEB; /* amber-50 */
+  --color-warning-100: #FEF3C7; /* amber-100 */
+  
+  --color-error: #DC2626; /* red-600 - Clear red */
+  --color-error-50: #FEF2F2; /* red-50 */
+  --color-error-100: #FEE2E2; /* red-100 */
+  
+  /* Border Colors */
+  --color-border: #E2E8F0; /* slate-200 */
+  --color-border-light: #F1F5F9; /* slate-100 */
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+  
+  .font-data {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-sm bg-white/80 border border-slate-200/50;
+  }
+  
+  .floating-action {
+    @apply shadow-lg rounded-xl transition-all duration-200 hover:scale-102;
+  }
+  
+  .micro-interaction {
+    @apply transition-all duration-150 hover:scale-102;
+  }
+  
+  .skeleton-pulse {
+    @apply animate-pulse bg-slate-200 rounded;
+  }
+  
+  .contextual-tooltip {
+    @apply absolute z-50 px-2 py-1 text-xs bg-slate-800 text-white rounded shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none;
+  }
+  
+  .progressive-disclosure {
+    @apply transition-all duration-300 ease-out overflow-hidden;
+  }
+}
+
+@layer utilities {
+  .hover\:scale-102:hover {
+    transform: scale(1.02);
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+}

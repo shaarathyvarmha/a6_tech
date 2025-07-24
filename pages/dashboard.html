@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - A6 TECH</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fa6tech7378back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Fixed Header -->
+    <header class="bg-surface border-b border-border fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 text-primary mr-3" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="32" height="32" rx="8" fill="currentColor"/>
+                        <path d="M8 12L16 8L24 12V20L16 24L8 20V12Z" fill="white"/>
+                        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+                    </svg>
+                    <span class="text-xl font-semibold text-text-primary">A6 TECH</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="dashboard.html" class="text-primary font-medium border-b-2 border-primary pb-1">
+                        Dashboard
+                    </a>
+                    <a href="all_members_list.html" class="text-text-secondary hover:text-primary transition-colors duration-200 font-medium">
+                        Members
+                    </a>
+                    <a href="analytics_dashboard.html" class="text-text-secondary hover:text-primary transition-colors duration-200 font-medium">
+                        Analytics
+                    </a>
+                </nav>
+
+                <!-- User Profile & Mobile Menu -->
+                <div class="flex items-center space-x-4">
+                    <!-- User Profile -->
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full overflow-hidden border-2 border-border">
+                            <img id="headerProfilePic" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        </div>
+                        <div class="hidden sm:block">
+                            <p id="headerUserName" class="text-sm font-medium text-text-primary">John Doe</p>
+                            <p id="headerUserRole" class="text-xs text-text-secondary">Developer</p>
+                        </div>
+                    </div>
+
+                    <!-- Logout Button -->
+                    <button onclick="handleLogout()" class="hidden sm:flex items-center space-x-2 px-3 py-2 text-sm font-medium text-text-secondary hover:text-error transition-colors duration-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                        <span>Logout</span>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuButton" class="md:hidden p-2 rounded-lg hover:bg-secondary-100 transition-colors duration-200" onclick="toggleMobileMenu()">
+                        <svg class="w-6 h-6 text-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-surface border-t border-border">
+            <div class="px-4 py-3 space-y-3">
+                <a href="dashboard.html" class="block px-3 py-2 text-primary font-medium bg-primary-50 rounded-lg">
+                    Dashboard
+                </a>
+                <a href="all_members_list.html" class="block px-3 py-2 text-text-secondary hover:text-primary hover:bg-secondary-100 rounded-lg transition-colors duration-200">
+                    Members
+                </a>
+                <a href="analytics_dashboard.html" class="block px-3 py-2 text-text-secondary hover:text-primary hover:bg-secondary-100 rounded-lg transition-colors duration-200">
+                    Analytics
+                </a>
+                <button onclick="handleLogout()" class="flex items-center space-x-2 w-full px-3 py-2 text-error hover:bg-error-50 rounded-lg transition-colors duration-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-16 pb-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- Welcome Section -->
+            <div class="mb-8">
+                <h1 class="text-2xl sm:text-3xl font-semibold text-text-primary mb-2">
+                    Welcome back, <span id="welcomeUserName">John</span>!
+                </h1>
+                <p class="text-text-secondary">
+                    <span id="currentDateTime">Wednesday, July 24, 2025 • 8:40 AM</span>
+                </p>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column - Profile & Session Control -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- User Profile Card -->
+                    <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-16 h-16 rounded-2xl overflow-hidden border-2 border-border flex-shrink-0">
+                                <img id="profilePicture" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            </div>
+                            <div class="flex-1">
+                                <h2 id="userName" class="text-xl font-semibold text-text-primary mb-1">John Doe</h2>
+                                <p id="userRole" class="text-text-secondary mb-2">Developer</p>
+                                <div class="flex items-center space-x-4 text-sm">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-accent rounded-full"></div>
+                                        <span id="userA6ID" class="font-data text-text-secondary">A6ID0001</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <svg class="w-4 h-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                        </svg>
+                                        <span id="userEmail" class="text-text-secondary">john.doe@a6tech.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <div id="sessionStatus" class="px-3 py-1 rounded-full text-xs font-medium bg-secondary-100 text-text-secondary">
+                                    Offline
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Session Control Card -->
+                    <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                        <div class="text-center">
+                            <h3 class="text-lg font-semibold text-text-primary mb-6">Work Session</h3>
+                            
+                            <!-- Real-time Clock -->
+                            <div class="mb-8">
+                                <div id="liveClock" class="text-4xl sm:text-5xl font-data font-semibold text-text-primary mb-2">
+                                    08:40:58
+                                </div>
+                                <div id="liveDate" class="text-text-secondary">
+                                    Wednesday, July 24, 2025
+                                </div>
+                            </div>
+
+                            <!-- Session Button -->
+                            <div class="mb-6">
+                                <button id="sessionButton" onclick="toggleSession()" class="w-full sm:w-auto px-8 py-4 bg-primary text-white rounded-2xl font-semibold text-lg hover:bg-primary-700 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <span id="sessionButtonText">Start Session</span>
+                                </button>
+                            </div>
+
+                            <!-- Current Session Info -->
+                            <div id="currentSessionInfo" class="hidden">
+                                <div class="bg-accent-50 rounded-xl p-4 mb-4">
+                                    <div class="flex items-center justify-center space-x-2 mb-2">
+                                        <div class="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+                                        <span class="text-accent font-medium">Session Active</span>
+                                    </div>
+                                    <div class="text-sm text-text-secondary">
+                                        Started at: <span id="sessionStartTime" class="font-data">--:--:--</span>
+                                    </div>
+                                    <div class="text-lg font-semibold text-text-primary mt-2">
+                                        Duration: <span id="sessionDuration" class="font-data">00:00:00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Sessions -->
+                    <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4">Recent Sessions</h3>
+                        <div id="recentSessions" class="space-y-3">
+                            <!-- Sessions will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Quick Stats -->
+                <div class="space-y-6">
+                    <!-- Today's Stats -->
+                    <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4">Today's Summary</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-text-secondary">Total Hours</p>
+                                        <p id="todayHours" class="font-semibold text-text-primary font-data">0h 0m</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-accent-50 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-text-secondary">Sessions</p>
+                                        <p id="todaySessions" class="font-semibold text-text-primary">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weekly Stats -->
+                    <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4">This Week</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-text-secondary">Total Hours</span>
+                                <span id="weeklyHours" class="font-semibold text-text-primary font-data">0h 0m</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-text-secondary">Avg. Daily</span>
+                                <span id="avgDaily" class="font-semibold text-text-primary font-data">0h 0m</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-text-secondary">Days Active</span>
+                                <span id="activeDays" class="font-semibold text-text-primary">0/7</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Actions</h3>
+                        <div class="space-y-3">
+                            <a href="all_members_list.html" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-secondary-100 transition-colors duration-200">
+                                <div class="w-8 h-8 bg-secondary-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                                    </svg>
+                                </div>
+                                <span class="text-text-primary font-medium">View All Members</span>
+                            </a>
+                            
+                            <a href="analytics_dashboard.html" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-secondary-100 transition-colors duration-200">
+                                <div class="w-8 h-8 bg-secondary-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 00-2-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                </div>
+                                <span class="text-text-primary font-medium">Analytics Dashboard</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-border mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="text-center text-text-secondary text-sm">
+                © 2025 A6 TECH. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentUser = null;
+        let sessionActive = false;
+        let sessionStartTime = null;
+        let sessionTimer = null;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCurrentUser();
+            updateDateTime();
+            updateLiveClock();
+            loadRecentSessions();
+            updateStats();
+            
+            // Update clock every second
+            setInterval(updateLiveClock, 1000);
+            setInterval(updateDateTime, 60000); // Update date every minute
+        });
+
+        // Load current user data
+        function loadCurrentUser() {
+            const currentA6ID = localStorage.getItem('currentUser');
+            if (!currentA6ID) {
+                window.location.href = 'user_login.html';
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('a6_users') || '[]');
+            currentUser = users.find(user => user.a6id === currentA6ID);
+            
+            if (!currentUser) {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'user_login.html';
+                return;
+            }
+
+            // Update UI with user data
+            document.getElementById('headerProfilePic').src = currentUser.profilePicture;
+            document.getElementById('headerUserName').textContent = currentUser.fullName;
+            document.getElementById('headerUserRole').textContent = currentUser.role;
+            document.getElementById('welcomeUserName').textContent = currentUser.fullName.split(' ')[0];
+            document.getElementById('profilePicture').src = currentUser.profilePicture;
+            document.getElementById('userName').textContent = currentUser.fullName;
+            document.getElementById('userRole').textContent = currentUser.role;
+            document.getElementById('userA6ID').textContent = currentUser.a6id;
+            document.getElementById('userEmail').textContent = currentUser.email;
+
+            // Check if user has an active session
+            checkActiveSession();
+        }
+
+        // Check for active session
+        function checkActiveSession() {
+            const activeSession = localStorage.getItem('activeSession_' + currentUser.a6id);
+            if (activeSession) {
+                const sessionData = JSON.parse(activeSession);
+                sessionActive = true;
+                sessionStartTime = new Date(sessionData.startTime);
+                
+                updateSessionUI();
+                startSessionTimer();
+            }
+        }
+
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            };
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        // Update live clock
+        function updateLiveClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            const dateString = now.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric'
+            });
+            
+            document.getElementById('liveClock').textContent = timeString;
+            document.getElementById('liveDate').textContent = dateString;
+        }
+
+        // Toggle session
+        function toggleSession() {
+            if (sessionActive) {
+                endSession();
+            } else {
+                startSession();
+            }
+        }
+
+        // Start session
+        function startSession() {
+            sessionActive = true;
+            sessionStartTime = new Date();
+            
+            // Save active session to localStorage
+            localStorage.setItem('activeSession_' + currentUser.a6id, JSON.stringify({
+                startTime: sessionStartTime.toISOString(),
+                a6id: currentUser.a6id
+            }));
+
+            updateSessionUI();
+            startSessionTimer();
+        }
+
+        // End session
+        function endSession() {
+            if (!sessionStartTime) return;
+
+            const endTime = new Date();
+            const duration = endTime - sessionStartTime;
+
+            // Save session to user's sessions array
+            const users = JSON.parse(localStorage.getItem('a6_users') || '[]');
+            const userIndex = users.findIndex(user => user.a6id === currentUser.a6id);
+            
+            if (userIndex !== -1) {
+                if (!users[userIndex].sessions) {
+                    users[userIndex].sessions = [];
+                }
+
+                users[userIndex].sessions.push({
+                    startTime: sessionStartTime.toISOString(),
+                    endTime: endTime.toISOString(),
+                    duration: duration,
+                    date: sessionStartTime.toDateString()
+                });
+
+                // Update total work time
+                users[userIndex].totalWorkTime = (users[userIndex].totalWorkTime || 0) + duration;
+
+                localStorage.setItem('a6_users', JSON.stringify(users));
+                currentUser = users[userIndex];
+            }
+
+            // Clear active session
+            localStorage.removeItem('activeSession_' + currentUser.a6id);
+
+            sessionActive = false;
+            sessionStartTime = null;
+            
+            if (sessionTimer) {
+                clearInterval(sessionTimer);
+                sessionTimer = null;
+            }
+
+            updateSessionUI();
+            loadRecentSessions();
+            updateStats();
+        }
+
+        // Update session UI
+        function updateSessionUI() {
+            const sessionButton = document.getElementById('sessionButton');
+            const sessionButtonText = document.getElementById('sessionButtonText');
+            const sessionStatus = document.getElementById('sessionStatus');
+            const currentSessionInfo = document.getElementById('currentSessionInfo');
+
+            if (sessionActive) {
+                sessionButtonText.textContent = 'End Session';
+                sessionButton.classList.remove('bg-primary', 'hover:bg-primary-700');
+                sessionButton.classList.add('bg-error', 'hover:bg-red-700');
+                
+                sessionStatus.textContent = 'Online';
+                sessionStatus.classList.remove('bg-secondary-100', 'text-text-secondary');
+                sessionStatus.classList.add('bg-accent-100', 'text-accent');
+
+                currentSessionInfo.classList.remove('hidden');
+                document.getElementById('sessionStartTime').textContent = sessionStartTime.toLocaleTimeString();
+            } else {
+                sessionButtonText.textContent = 'Start Session';
+                sessionButton.classList.remove('bg-error', 'hover:bg-red-700');
+                sessionButton.classList.add('bg-primary', 'hover:bg-primary-700');
+                
+                sessionStatus.textContent = 'Offline';
+                sessionStatus.classList.remove('bg-accent-100', 'text-accent');
+                sessionStatus.classList.add('bg-secondary-100', 'text-text-secondary');
+
+                currentSessionInfo.classList.add('hidden');
+            }
+        }
+
+        // Start session timer
+        function startSessionTimer() {
+            sessionTimer = setInterval(() => {
+                if (sessionStartTime) {
+                    const now = new Date();
+                    const duration = now - sessionStartTime;
+                    const hours = Math.floor(duration / (1000 * 60 * 60));
+                    const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((duration % (1000 * 60)) / 1000);
+                    
+                    document.getElementById('sessionDuration').textContent = 
+                        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+
+        // Load recent sessions
+        function loadRecentSessions() {
+            const recentSessionsContainer = document.getElementById('recentSessions');
+            const sessions = currentUser.sessions || [];
+            const recentSessions = sessions.slice(-5).reverse();
+
+            if (recentSessions.length === 0) {
+                recentSessionsContainer.innerHTML = `
+                    <div class="text-center py-8 text-text-secondary">
+                        <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p>No sessions recorded yet</p>
+                        <p class="text-sm">Start your first work session above</p>
+                    </div>
+                `;
+                return;
+            }
+
+            recentSessionsContainer.innerHTML = recentSessions.map(session => {
+                const startTime = new Date(session.startTime);
+                const endTime = new Date(session.endTime);
+                const duration = formatDuration(session.duration);
+
+                return `
+                    <div class="flex items-center justify-between p-3 bg-secondary-50 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-accent-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-text-primary">${startTime.toLocaleDateString()}</p>
+                                <p class="text-xs text-text-secondary">
+                                    ${startTime.toLocaleTimeString()} - ${endTime.toLocaleTimeString()}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm font-semibold text-text-primary font-data">${duration}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Update stats
+        function updateStats() {
+            const sessions = currentUser.sessions || [];
+            const today = new Date().toDateString();
+            const thisWeek = getThisWeekDates();
+
+            // Today's stats
+            const todaySessions = sessions.filter(session => 
+                new Date(session.startTime).toDateString() === today
+            );
+            const todayDuration = todaySessions.reduce((total, session) => total + session.duration, 0);
+
+            document.getElementById('todayHours').textContent = formatDuration(todayDuration);
+            document.getElementById('todaySessions').textContent = todaySessions.length;
+
+            // Weekly stats
+            const weeklySessions = sessions.filter(session => {
+                const sessionDate = new Date(session.startTime).toDateString();
+                return thisWeek.includes(sessionDate);
+            });
+            const weeklyDuration = weeklySessions.reduce((total, session) => total + session.duration, 0);
+            const activeDays = new Set(weeklySessions.map(session => 
+                new Date(session.startTime).toDateString()
+            )).size;
+
+            document.getElementById('weeklyHours').textContent = formatDuration(weeklyDuration);
+            document.getElementById('avgDaily').textContent = formatDuration(activeDays > 0 ? weeklyDuration / activeDays : 0);
+            document.getElementById('activeDays').textContent = `${activeDays}/7`;
+        }
+
+        // Get this week's dates
+        function getThisWeekDates() {
+            const today = new Date();
+            const currentDay = today.getDay();
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - currentDay);
+
+            const weekDates = [];
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + i);
+                weekDates.push(date.toDateString());
+            }
+            return weekDates;
+        }
+
+        // Format duration
+        function formatDuration(milliseconds) {
+            const hours = Math.floor(milliseconds / (1000 * 60 * 60));
+            const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
+            
+            if (hours === 0 && minutes === 0) {
+                return '0m';
+            } else if (hours === 0) {
+                return `${minutes}m`;
+            } else if (minutes === 0) {
+                return `${hours}h`;
+            } else {
+                return `${hours}h ${minutes}m`;
+            }
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Handle logout
+        function handleLogout() {
+            if (sessionActive) {
+                if (confirm('You have an active session. Do you want to end it and logout?')) {
+                    endSession();
+                } else {
+                    return;
+                }
+            }
+
+            localStorage.removeItem('currentUser');
+            window.location.href = 'user_login.html';
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            
+            if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

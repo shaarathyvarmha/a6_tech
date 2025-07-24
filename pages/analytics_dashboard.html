@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analytics Dashboard - A6 TECH</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fa6tech7378back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Header -->
+    <header class="bg-surface border-b border-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 text-primary mr-3" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="32" height="32" rx="8" fill="currentColor"/>
+                        <path d="M8 12L16 8L24 12V20L16 24L8 20V12Z" fill="white"/>
+                        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+                    </svg>
+                    <span class="text-xl font-semibold text-text-primary">A6 TECH</span>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="dashboard.html" class="text-text-secondary hover:text-primary transition-colors duration-200 font-medium">
+                        Dashboard
+                    </a>
+                    <a href="all_members_list.html" class="text-text-secondary hover:text-primary transition-colors duration-200 font-medium">
+                        Members
+                    </a>
+                    <a href="analytics_dashboard.html" class="text-primary font-medium border-b-2 border-primary pb-1">
+                        Analytics
+                    </a>
+                    <a href="user_login.html" class="bg-primary text-white px-4 py-2 rounded-xl hover:bg-primary-700 transition-colors duration-200 font-medium">
+                        Logout
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-secondary-100 transition-colors duration-200">
+                    <svg class="w-6 h-6 text-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-border">
+                <div class="flex flex-col space-y-3">
+                    <a href="dashboard.html" class="text-text-secondary hover:text-primary transition-colors duration-200 font-medium px-2 py-1">
+                        Dashboard
+                    </a>
+                    <a href="all_members_list.html" class="text-text-secondary hover:text-primary transition-colors duration-200 font-medium px-2 py-1">
+                        Members
+                    </a>
+                    <a href="analytics_dashboard.html" class="text-primary font-medium px-2 py-1">
+                        Analytics
+                    </a>
+                    <a href="user_login.html" class="bg-primary text-white px-4 py-2 rounded-xl hover:bg-primary-700 transition-colors duration-200 font-medium text-center">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-semibold text-text-primary mb-2">Analytics Dashboard</h1>
+            <p class="text-text-secondary">Comprehensive work time tracking insights and productivity analytics</p>
+        </div>
+
+        <!-- Search Section -->
+        <section class="bg-surface rounded-2xl shadow-lg border border-border p-6 mb-8">
+            <div class="flex flex-col lg:flex-row gap-6">
+                <!-- A6ID Search -->
+                <div class="flex-1">
+                    <label for="a6idSearch" class="block text-sm font-medium text-text-primary mb-2">
+                        Search by A6ID
+                    </label>
+                    <div class="relative">
+                        <input type="text" id="a6idSearch" placeholder="Enter A6ID (e.g., A6ID0001)" class="w-full px-4 py-3 pl-12 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200" />
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        
+                        <!-- Autocomplete Dropdown -->
+                        <div id="autocompleteDropdown" class="hidden absolute top-full left-0 right-0 mt-1 bg-surface border border-border rounded-xl shadow-lg z-10 max-h-48 overflow-y-auto">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date Range Filter -->
+                <div class="flex-1">
+                    <label for="dateRange" class="block text-sm font-medium text-text-primary mb-2">
+                        Date Range
+                    </label>
+                    <select id="dateRange" class="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 bg-surface">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="90">Last 3 months</option>
+                        <option value="365">Last year</option>
+                        <option value="all">All time</option>
+                    </select>
+                </div>
+
+                <!-- Search Button -->
+                <div class="flex items-end">
+                    <button id="searchBtn" class="bg-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-primary-700 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 00-2-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        Analyze
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Results -->
+        <div id="analyticsResults" class="hidden">
+            <!-- Member Info Card -->
+            <section id="memberInfoCard" class="bg-surface rounded-2xl shadow-lg border border-border p-6 mb-8">
+                <!-- Populated by JavaScript -->
+            </section>
+
+            <!-- Summary Metrics -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-text-secondary text-sm font-medium">Total Hours</p>
+                            <p id="totalHours" class="text-2xl font-semibold text-text-primary font-data">0h 0m</p>
+                        </div>
+                        <div class="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-text-secondary text-sm font-medium">Total Sessions</p>
+                            <p id="totalSessions" class="text-2xl font-semibold text-text-primary font-data">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-accent-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-text-secondary text-sm font-medium">Avg Session</p>
+                            <p id="avgSession" class="text-2xl font-semibold text-text-primary font-data">0h 0m</p>
+                        </div>
+                        <div class="w-12 h-12 bg-warning-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-text-secondary text-sm font-medium">This Week</p>
+                            <p id="thisWeek" class="text-2xl font-semibold text-text-primary font-data">0h 0m</p>
+                        </div>
+                        <div class="w-12 h-12 bg-secondary-100 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Time Series Chart -->
+                <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold text-text-primary">Daily Work Hours</h3>
+                        <div class="flex space-x-2">
+                            <button class="chart-period-btn active px-3 py-1 text-sm rounded-lg bg-primary text-white" data-period="daily">Daily</button>
+                            <button class="chart-period-btn px-3 py-1 text-sm rounded-lg bg-secondary-100 text-text-secondary hover:bg-secondary-200" data-period="weekly">Weekly</button>
+                            <button class="chart-period-btn px-3 py-1 text-sm rounded-lg bg-secondary-100 text-text-secondary hover:bg-secondary-200" data-period="monthly">Monthly</button>
+                        </div>
+                    </div>
+                    <div class="relative h-64">
+                        <canvas id="timeSeriesChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Session Distribution Chart -->
+                <div class="bg-surface rounded-2xl shadow-lg border border-border p-6">
+                    <h3 class="text-lg font-semibold text-text-primary mb-6">Session Distribution</h3>
+                    <div class="relative h-64">
+                        <canvas id="sessionChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Session History -->
+            <section class="bg-surface rounded-2xl shadow-lg border border-border">
+                <div class="p-6 border-b border-border">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-text-primary">Session History</h3>
+                        <button id="exportBtn" class="bg-accent text-white px-4 py-2 rounded-xl font-medium hover:bg-accent-600 transition-colors duration-200">
+                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            Export CSV
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-secondary-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Login Time</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Logout Time</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Duration</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sessionHistoryTable" class="bg-surface divide-y divide-border">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="text-center py-12">
+            <div class="w-24 h-24 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-12 h-12 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 00-2-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-text-primary mb-2">Search for Analytics</h3>
+            <p class="text-text-secondary mb-6 max-w-md mx-auto">Enter an A6ID above to view detailed work time analytics and session history for team members.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="all_members_list.html" class="bg-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-primary-700 transition-colors duration-200">
+                    View All Members
+                </a>
+                <a href="dashboard.html" class="bg-secondary-100 text-text-primary px-6 py-3 rounded-xl font-medium hover:bg-secondary-200 transition-colors duration-200">
+                    Go to Dashboard
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-border mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="text-center text-text-secondary text-sm">
+                © 2025 A6 TECH. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let timeSeriesChart = null;
+        let sessionChart = null;
+        let currentMember = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            loadAutocompleteData();
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+                const mobileMenu = document.getElementById('mobileMenu');
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Search functionality
+            document.getElementById('searchBtn').addEventListener('click', performSearch);
+            document.getElementById('a6idSearch').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            // Autocomplete
+            document.getElementById('a6idSearch').addEventListener('input', handleAutocomplete);
+            document.getElementById('a6idSearch').addEventListener('focus', handleAutocomplete);
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#a6idSearch')) {
+                    document.getElementById('autocompleteDropdown').classList.add('hidden');
+                }
+            });
+
+            // Chart period buttons
+            document.querySelectorAll('.chart-period-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.chart-period-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-primary', 'text-white');
+                        b.classList.add('bg-secondary-100', 'text-text-secondary');
+                    });
+                    this.classList.add('active', 'bg-primary', 'text-white');
+                    this.classList.remove('bg-secondary-100', 'text-text-secondary');
+                    
+                    if (currentMember) {
+                        updateTimeSeriesChart(this.dataset.period);
+                    }
+                });
+            });
+
+            // Export functionality
+            document.getElementById('exportBtn').addEventListener('click', exportData);
+        }
+
+        // Load autocomplete data
+        function loadAutocompleteData() {
+            const users = JSON.parse(localStorage.getItem('a6_users') || '[]');
+            const dropdown = document.getElementById('autocompleteDropdown');
+            
+            dropdown.innerHTML = users.map(user => `
+                <div class="px-4 py-2 hover:bg-secondary-50 cursor-pointer autocomplete-item" data-a6id="${user.a6id}">
+                    <div class="flex items-center space-x-3">
+                        <img src="${user.profilePicture}" alt="${user.fullName}" class="w-8 h-8 rounded-full object-cover" 
+                             onerror="this.src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;">
+                        <div>
+                            <p class="text-sm font-medium text-text-primary">${user.a6id}</p>
+                            <p class="text-xs text-text-secondary">${user.fullName} - ${user.role}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click handlers to autocomplete items
+            dropdown.querySelectorAll('.autocomplete-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.getElementById('a6idSearch').value = this.dataset.a6id;
+                    dropdown.classList.add('hidden');
+                    performSearch();
+                });
+            });
+        }
+
+        // Handle autocomplete
+        function handleAutocomplete() {
+            const input = document.getElementById('a6idSearch');
+            const dropdown = document.getElementById('autocompleteDropdown');
+            const query = input.value.toLowerCase();
+
+            if (query.length === 0) {
+                dropdown.classList.add('hidden');
+                return;
+            }
+
+            const items = dropdown.querySelectorAll('.autocomplete-item');
+            let hasVisibleItems = false;
+
+            items.forEach(item => {
+                const a6id = item.dataset.a6id.toLowerCase();
+                const text = item.textContent.toLowerCase();
+                
+                if (a6id.includes(query) || text.includes(query)) {
+                    item.style.display = 'block';
+                    hasVisibleItems = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            if (hasVisibleItems) {
+                dropdown.classList.remove('hidden');
+            } else {
+                dropdown.classList.add('hidden');
+            }
+        }
+
+        // Perform search
+        function performSearch() {
+            const a6id = document.getElementById('a6idSearch').value.trim();
+            
+            if (!a6id) {
+                alert('Please enter an A6ID to search');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('a6_users') || '[]');
+            const member = users.find(user => user.a6id.toLowerCase() === a6id.toLowerCase());
+
+            if (!member) {
+                alert('Member not found. Please check the A6ID and try again.');
+                return;
+            }
+
+            currentMember = member;
+            displayAnalytics(member);
+            document.getElementById('emptyState').classList.add('hidden');
+            document.getElementById('analyticsResults').classList.remove('hidden');
+            document.getElementById('autocompleteDropdown').classList.add('hidden');
+        }
+
+        // Display analytics
+        function displayAnalytics(member) {
+            // Display member info
+            displayMemberInfo(member);
+            
+            // Calculate and display metrics
+            const metrics = calculateMetrics(member);
+            displayMetrics(metrics);
+            
+            // Create charts
+            createTimeSeriesChart(member, 'daily');
+            createSessionChart(member);
+            
+            // Display session history
+            displaySessionHistory(member);
+        }
+
+        // Display member info
+        function displayMemberInfo(member) {
+            const memberInfoCard = document.getElementById('memberInfoCard');
+            memberInfoCard.innerHTML = `
+                <div class="flex items-center space-x-4">
+                    <img src="${member.profilePicture}" alt="${member.fullName}" class="w-16 h-16 rounded-full object-cover" 
+                         onerror="this.src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;">
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold text-text-primary">${member.fullName}</h2>
+                        <p class="text-text-secondary">${member.a6id} • ${member.role}</p>
+                        <p class="text-sm text-text-secondary">${member.email}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-text-secondary">Member since</p>
+                        <p class="font-medium text-text-primary">${formatDate(member.registrationDate)}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Calculate metrics
+        function calculateMetrics(member) {
+            const sessions = member.sessions || [];
+            const completedSessions = sessions.filter(s => s.logoutTime);
+            
+            let totalMinutes = 0;
+            let thisWeekMinutes = 0;
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+            completedSessions.forEach(session => {
+                const loginTime = new Date(session.loginTime);
+                const logoutTime = new Date(session.logoutTime);
+                const duration = (logoutTime - loginTime) / (1000 * 60); // minutes
+                
+                totalMinutes += duration;
+                
+                if (loginTime >= oneWeekAgo) {
+                    thisWeekMinutes += duration;
+                }
+            });
+
+            const avgSessionMinutes = completedSessions.length > 0 ? totalMinutes / completedSessions.length : 0;
+
+            return {
+                totalHours: formatDuration(totalMinutes),
+                totalSessions: sessions.length,
+                avgSession: formatDuration(avgSessionMinutes),
+                thisWeek: formatDuration(thisWeekMinutes)
+            };
+        }
+
+        // Display metrics
+        function displayMetrics(metrics) {
+            document.getElementById('totalHours').textContent = metrics.totalHours;
+            document.getElementById('totalSessions').textContent = metrics.totalSessions;
+            document.getElementById('avgSession').textContent = metrics.avgSession;
+            document.getElementById('thisWeek').textContent = metrics.thisWeek;
+        }
+
+        // Create time series chart
+        function createTimeSeriesChart(member, period) {
+            const ctx = document.getElementById('timeSeriesChart').getContext('2d');
+            
+            if (timeSeriesChart) {
+                timeSeriesChart.destroy();
+            }
+
+            const data = generateTimeSeriesData(member, period);
+
+            timeSeriesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Hours Worked',
+                        data: data.values,
+                        borderColor: '#2563EB',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + 'h';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create session chart
+        function createSessionChart(member) {
+            const ctx = document.getElementById('sessionChart').getContext('2d');
+            
+            if (sessionChart) {
+                sessionChart.destroy();
+            }
+
+            const sessions = member.sessions || [];
+            const sessionsByHour = {};
+            
+            // Initialize hours
+            for (let i = 0; i < 24; i++) {
+                sessionsByHour[i] = 0;
+            }
+
+            sessions.forEach(session => {
+                const hour = new Date(session.loginTime).getHours();
+                sessionsByHour[hour]++;
+            });
+
+            const labels = Object.keys(sessionsByHour).map(h => `${h}:00`);
+            const data = Object.values(sessionsByHour);
+
+            sessionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Sessions',
+                        data: data,
+                        backgroundColor: '#10B981',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Generate time series data
+        function generateTimeSeriesData(member, period) {
+            const sessions = member.sessions || [];
+            const completedSessions = sessions.filter(s => s.logoutTime);
+            
+            const data = {};
+            const labels = [];
+            const values = [];
+
+            // Generate date range based on period
+            const endDate = new Date();
+            const startDate = new Date();
+            
+            if (period === 'daily') {
+                startDate.setDate(endDate.getDate() - 30);
+                
+                for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+                    const dateKey = d.toISOString().split('T')[0];
+                    data[dateKey] = 0;
+                }
+            } else if (period === 'weekly') {
+                startDate.setDate(endDate.getDate() - (12 * 7));
+                
+                for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 7)) {
+                    const weekKey = `Week ${Math.ceil(d.getDate() / 7)}`;
+                    data[weekKey] = 0;
+                }
+            } else if (period === 'monthly') {
+                startDate.setMonth(endDate.getMonth() - 12);
+                
+                for (let d = new Date(startDate); d <= endDate; d.setMonth(d.getMonth() + 1)) {
+                    const monthKey = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                    data[monthKey] = 0;
+                }
+            }
+
+            // Calculate hours for each period
+            completedSessions.forEach(session => {
+                const loginTime = new Date(session.loginTime);
+                const logoutTime = new Date(session.logoutTime);
+                const hours = (logoutTime - loginTime) / (1000 * 60 * 60);
+                
+                let key;
+                if (period === 'daily') {
+                    key = loginTime.toISOString().split('T')[0];
+                } else if (period === 'weekly') {
+                    key = `Week ${Math.ceil(loginTime.getDate() / 7)}`;
+                } else if (period === 'monthly') {
+                    key = loginTime.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                }
+                
+                if (data.hasOwnProperty(key)) {
+                    data[key] += hours;
+                }
+            });
+
+            Object.keys(data).forEach(key => {
+                labels.push(key);
+                values.push(Math.round(data[key] * 10) / 10);
+            });
+
+            return { labels, values };
+        }
+
+        // Update time series chart
+        function updateTimeSeriesChart(period) {
+            if (currentMember && timeSeriesChart) {
+                createTimeSeriesChart(currentMember, period);
+            }
+        }
+
+        // Display session history
+        function displaySessionHistory(member) {
+            const tbody = document.getElementById('sessionHistoryTable');
+            const sessions = member.sessions || [];
+            
+            if (sessions.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="px-6 py-8 text-center text-text-secondary">
+                            No session history found for this member.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = sessions.map(session => {
+                const loginTime = new Date(session.loginTime);
+                const logoutTime = session.logoutTime ? new Date(session.logoutTime) : null;
+                const duration = logoutTime ? (logoutTime - loginTime) / (1000 * 60) : null;
+                
+                return `
+                    <tr class="hover:bg-secondary-50 transition-colors duration-200">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-text-primary">
+                            ${formatDate(session.loginTime)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-data text-text-primary">
+                            ${formatTime(session.loginTime)}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-data text-text-primary">
+                            ${logoutTime ? formatTime(session.logoutTime) : '-'}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-data text-text-primary">
+                            ${duration ? formatDuration(duration) : '-'}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                logoutTime ? 'bg-success-100 text-success' : 'bg-warning-100 text-warning'
+                            }">
+                                ${logoutTime ? 'Completed' : 'Active'}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">
+                            <button class="text-primary hover:text-primary-700 font-medium" onclick="viewSessionDetails('${session.loginTime}')">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Export data
+        function exportData() {
+            if (!currentMember) return;
+
+            const sessions = currentMember.sessions || [];
+            const csvContent = [
+                ['Date', 'Login Time', 'Logout Time', 'Duration (minutes)', 'Status'],
+                ...sessions.map(session => [
+                    formatDate(session.loginTime),
+                    formatTime(session.loginTime),
+                    session.logoutTime ? formatTime(session.logoutTime) : 'N/A',
+                    session.logoutTime ? Math.round((new Date(session.logoutTime) - new Date(session.loginTime)) / (1000 * 60)) : 'N/A',
+                    session.logoutTime ? 'Completed' : 'Active'
+                ])
+            ].map(row => row.join(',')).join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${currentMember.a6id}_session_history.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // View session details
+        function viewSessionDetails(loginTime) {
+            const session = currentMember.sessions.find(s => s.loginTime === loginTime);
+            if (!session) return;
+
+            const loginDate = new Date(session.loginTime);
+            const logoutDate = session.logoutTime ? new Date(session.logoutTime) : null;
+            const duration = logoutDate ? (logoutDate - loginDate) / (1000 * 60) : null;
+
+            alert(`Session Details:\n\nLogin: ${loginDate.toLocaleString()}\nLogout: ${logoutDate ? logoutDate.toLocaleString() : 'Still active'}\nDuration: ${duration ? formatDuration(duration) : 'Ongoing'}`);
+        }
+
+        // Utility functions
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+        }
+
+        function formatTime(dateString) {
+            return new Date(dateString).toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
+
+        function formatDuration(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = Math.round(minutes % 60);
+            return `${hours}h ${mins}m`;
+        }
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
