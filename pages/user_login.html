@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Login - A6 TECH</title>
     <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="/css/main.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fa6tech7378back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+    <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fa6tech7378back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
 </head>
 <body class="min-h-screen bg-background">
     <!-- Header -->
     <header class="border-b bg-surface border-border">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
                 <div class="flex items-center">
                     <svg class="w-8 h-8 mr-3 text-primary" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="32" height="32" rx="8" fill="currentColor"/>
@@ -22,12 +22,8 @@
                     </svg>
                     <span class="text-xl font-semibold text-text-primary">A6 TECH</span>
                 </div>
-                
-                <!-- Navigation -->
                 <nav class="flex items-center space-x-4">
-                    <a href="user_registration.html" class="font-medium transition-colors duration-200 text-text-secondary hover:text-primary">
-                        Register
-                    </a>
+                    <a href="user_registration.html" class="font-medium transition-colors duration-200 text-text-secondary hover:text-primary">Register</a>
                 </nav>
             </div>
         </div>
@@ -36,312 +32,66 @@
     <!-- Main Content -->
     <main class="flex-1 px-4 py-8 sm:px-6 lg:px-8">
         <div class="max-w-md mx-auto">
-            <!-- Login Card -->
             <div class="p-6 border shadow-lg bg-surface rounded-2xl border-border sm:p-8">
-                <!-- Header -->
                 <div class="mb-8 text-center">
                     <h1 class="mb-2 text-2xl font-semibold text-text-primary">Welcome Back</h1>
                     <p class="text-text-secondary">Sign in to your A6 TECH account to track your work time</p>
                 </div>
 
-                <!-- Error Message (Hidden by default) -->
+                <!-- Error Message -->
                 <div id="errorMessage" class="hidden p-4 mb-6 border bg-error-50 border-error-100 rounded-xl">
-                    <div class="flex items-center">
-                        <svg class="w-5 h-5 mr-3 text-error" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                        </svg>
-                        <div>
-                            <p class="font-medium text-error">Login Failed</p>
-                            <p class="text-sm text-error" id="errorText">Invalid A6ID. Please check your credentials and try again.</p>
-                        </div>
-                    </div>
+                    <p class="font-medium text-error">Login Failed</p>
+                    <p class="text-sm text-error" id="errorText">Invalid A6ID. Please check your credentials and try again.</p>
                 </div>
 
                 <!-- Login Form -->
-                <form id="loginForm" class="space-y-6">
-                    <!-- A6ID Input -->
+                <form id="loginForm" action="/login" method="POST" class="space-y-6">
                     <div>
                         <label for="a6id" class="block mb-2 text-sm font-medium text-text-primary">
                             A6ID *
                         </label>
                         <div class="relative">
-                            <input type="text" id="a6id" name="a6id" placeholder="A6ID0001" required maxlength="8" class="w-full px-4 py-3 text-lg tracking-wider transition-all duration-200 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent font-data" oninput="formatA6ID(this)" />
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                <svg class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m0 0a2 2 0 012 2m-2-2a2 2 0 00-2 2m2-2a2 2 0 002 2M9 7a2 2 0 00-2 2v6a2 2 0 002 2h6a2 2 0 002-2V9a2 2 0 00-2-2H9z"/>
-                                </svg>
-                            </div>
+                            <input type="text" id="a6id" name="username" placeholder="A6ID0001" required maxlength="8"
+                                class="w-full px-4 py-3 text-lg tracking-wider border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent font-data"
+                                oninput="formatA6ID(this)" />
                         </div>
                         <p class="mt-1 text-xs text-text-secondary">Enter your unique A6ID (e.g., A6ID0001)</p>
-                        <div id="a6idError" class="hidden mt-1 text-sm text-error"></div>
                     </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" id="submitButton" class="w-full px-6 py-3 font-medium text-white transition-all duration-200 bg-primary rounded-xl hover:bg-primary-700 focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button type="submit" id="submitButton"
+                        class="w-full px-6 py-3 font-medium text-white bg-primary rounded-xl hover:bg-primary-700 focus:ring-2 focus:ring-primary focus:ring-offset-2">
                         <span id="submitText">Login</span>
-                        <svg id="loadingSpinner" class="hidden w-5 h-5 mr-3 -ml-1 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                        </svg>
                     </button>
                 </form>
 
                 <!-- Registration Link -->
                 <div class="mt-6 text-center">
                     <p class="text-sm text-text-secondary">
-                        New user? 
-                        <a href="user_registration.html" class="font-medium transition-colors duration-200 text-primary hover:text-primary-700">
+                        New user?
+                        <a href="user_registration.html" class="font-medium text-primary hover:text-primary-700">
                             Create Account
                         </a>
                     </p>
-                </div>
-
-                <!-- Security Badge -->
-                <div class="flex items-center justify-center mt-6 space-x-2 text-xs text-text-secondary">
-                    <svg class="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
-                    </svg>
-                    <span>Secure SSL Authentication</span>
-                </div>
-            </div>
-
-            <!-- Demo Credentials -->
-            <div class="p-4 mt-6 border bg-accent-50 border-accent-100 rounded-xl">
-                <div class="flex items-start">
-                    <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-                    </svg>
-                    <div>
-                        <h3 class="mb-1 text-sm font-medium text-accent">Demo Access</h3>
-                        <p class="text-xs text-accent">Try logging in with any registered A6ID from the system</p>
-                        <div class="mt-2 space-y-1">
-                            <p class="text-xs font-data text-accent">Example: A6ID0001</p>
-                            <p class="text-xs font-data text-accent">Example: A6ID0002</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Features Section -->
-            <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-3">
-                <div class="p-4 text-center">
-                    <div class="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-primary-50 rounded-xl">
-                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="mb-1 text-sm font-medium text-text-primary">Time Tracking</h3>
-                    <p class="text-xs text-text-secondary">Automatic login/logout timestamp recording</p>
-                </div>
-                
-                <div class="p-4 text-center">
-                    <div class="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-accent-50 rounded-xl">
-                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 00-2-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="mb-1 text-sm font-medium text-text-primary">Analytics</h3>
-                    <p class="text-xs text-text-secondary">Comprehensive work time insights and reports</p>
-                </div>
-                
-                <div class="p-4 text-center">
-                    <div class="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-warning-50 rounded-xl">
-                        <svg class="w-6 h-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="mb-1 text-sm font-medium text-text-primary">Team Management</h3>
-                    <p class="text-xs text-text-secondary">View all team members and their activity</p>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-12 border-t bg-surface border-border">
-        <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="text-sm text-center text-text-secondary">
-                © 2025 A6 TECH. All Rights Reserved.
-            </div>
-        </div>
-    </footer>
-
     <script>
-        // Format A6ID input
         function formatA6ID(input) {
             let value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-            
-            // Ensure it starts with A6ID
             if (value && !value.startsWith('A6ID')) {
-                if (value.startsWith('A6')) {
-                    value = 'A6ID' + value.substring(2);
-                } else if (value.startsWith('A')) {
-                    value = 'A6ID' + value.substring(1);
-                } else {
-                    value = 'A6ID' + value;
-                }
+                value = 'A6ID' + value.replace(/^A6?|A?/, '');
             }
-            
-            // Limit to A6ID + 4 digits
-            if (value.length > 8) {
-                value = value.substring(0, 8);
-            }
-            
+            if (value.length > 8) value = value.substring(0, 8);
             input.value = value;
         }
 
-        // Form validation
-        function validateForm() {
-            const a6idInput = document.getElementById('a6id');
-            const a6idError = document.getElementById('a6idError');
-            const a6idRegex = /^A6ID\d{4}$/;
-            
-            if (!a6idInput.value.trim()) {
-                a6idError.textContent = 'A6ID is required';
-                a6idError.classList.remove('hidden');
-                a6idInput.classList.add('border-error');
-                return false;
-            }
-            
-            if (!a6idRegex.test(a6idInput.value)) {
-                a6idError.textContent = 'Please enter a valid A6ID format (e.g., A6ID0001)';
-                a6idError.classList.remove('hidden');
-                a6idInput.classList.add('border-error');
-                return false;
-            }
-            
-            a6idError.classList.add('hidden');
-            a6idInput.classList.remove('border-error');
-            return true;
-        }
-
-        // Find user by A6ID
-        function findUserByA6ID(a6id) {
-            const users = JSON.parse(localStorage.getItem('a6_users') || '[]');
-            return users.find(user => user.a6id === a6id);
-        }
-
-        // Record login session
-        function recordLoginSession(user) {
-            const loginTime = new Date().toISOString();
-            const sessionId = 'session_' + Date.now();
-            
-            // Update user's sessions
-            const users = JSON.parse(localStorage.getItem('a6_users') || '[]');
-            const userIndex = users.findIndex(u => u.a6id === user.a6id);
-            
-            if (userIndex !== -1) {
-                if (!users[userIndex].sessions) {
-                    users[userIndex].sessions = [];
-                }
-                
-                users[userIndex].sessions.push({
-                    sessionId: sessionId,
-                    loginTime: loginTime,
-                    logoutTime: null,
-                    duration: 0
-                });
-                
-                localStorage.setItem('a6_users', JSON.stringify(users));
-            }
-            
-            // Set current session
-            localStorage.setItem('currentSession', JSON.stringify({
-                sessionId: sessionId,
-                a6id: user.a6id,
-                loginTime: loginTime,
-                user: user
-            }));
-        }
-
-        // Show error message
-        function showError(message) {
-            const errorMessage = document.getElementById('errorMessage');
-            const errorText = document.getElementById('errorText');
-            
-            errorText.textContent = message;
-            errorMessage.classList.remove('hidden');
-            
-            // Auto hide after 5 seconds
-            setTimeout(() => {
-                errorMessage.classList.add('hidden');
-            }, 5000);
-        }
-
-        // Form submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (!validateForm()) {
-                return;
-            }
-
-            const submitButton = document.getElementById('submitButton');
-            const submitText = document.getElementById('submitText');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            const a6id = document.getElementById('a6id').value;
-            
-            // Show loading state
-            submitButton.disabled = true;
-            submitText.textContent = 'Signing In...';
-            loadingSpinner.classList.remove('hidden');
-
-            // Simulate API call
-            setTimeout(() => {
-                const user = findUserByA6ID(a6id);
-                
-                if (user) {
-                    // Record login session
-                    recordLoginSession(user);
-                    
-                    // Redirect to dashboard
-                    window.location.href = 'dashboard.html';
-                } else {
-                    // Show error
-                    showError('A6ID not found. Please check your credentials or register a new account.');
-                    
-                    // Reset button state
-                    submitButton.disabled = false;
-                    submitText.textContent = 'Login';
-                    loadingSpinner.classList.add('hidden');
-                }
-            }, 1500);
-        });
-
-        // Real-time validation
-        document.getElementById('a6id').addEventListener('input', function() {
-            const errorMessage = document.getElementById('errorMessage');
-            const a6idError = document.getElementById('a6idError');
-            
-            if (this.value.trim()) {
-                a6idError.classList.add('hidden');
-                this.classList.remove('border-error');
-                errorMessage.classList.add('hidden');
-            }
-        });
-
-        // Auto-focus on A6ID input
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('a6id').focus();
-        });
-
-        // Check if user is already logged in
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentSession = localStorage.getItem('currentSession');
-            if (currentSession) {
-                const session = JSON.parse(currentSession);
-                // Check if session is still valid (less than 24 hours old)
-                const loginTime = new Date(session.loginTime);
-                const now = new Date();
-                const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
-                
-                if (hoursDiff < 24) {
-                    // Redirect to dashboard if session is still valid
-                    window.location.href = 'dashboard.html';
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('error') === '1') {
+                document.getElementById('errorMessage').classList.remove('hidden');
             }
         });
     </script>
-<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
 </body>
 </html>
